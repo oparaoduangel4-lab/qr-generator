@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live QR Code Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Live QR Code Generator</h1>
+
+    <input type="text" id="dataInput" placeholder="Enter text, URL, or data..." />
+    <button id="generateBtn">Generate QR Code</button>
+
+    <div id="qrcode"></div>
+
+    <button id="downloadBtn" class="hidden">⬇️ Download QR</button>
+
+    <h2>Previous QR Codes</h2>
+    <div id="history"></div>
+  </div>
