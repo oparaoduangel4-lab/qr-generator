@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Live QR Code Generator</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 </head>
 <body>
   <div class="container">
@@ -16,6 +18,8 @@
     <div id="qrcode"></div>
 
     <button id="downloadBtn" class="hidden">⬇️ Download QR</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
     <h2>Previous QR Codes</h2>
     <div id="history"></div>
