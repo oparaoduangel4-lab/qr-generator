@@ -1,77 +1,129 @@
-* {
-  box-sizing: border-box;
-}
-
+/* --- Global Layout --- */
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #0078ff, #00b4d8);
+  background-color: #0d111c;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  justify-content: center;
+  padding: 1rem;
+  color: #fff;
 }
 
+/* --- Glass Card --- */
 .container {
-  background: #fff;
-  padding: 30px 35px;
-  border-radius: 16px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  width: 380px;
-  max-height: 90vh;
-  overflow-y: auto;
-  transition: all 0.3s ease;
+  background-color: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(45, 62, 80, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
 }
 
-.container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+/* --- Header --- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
-.logo {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  margin-bottom: 10px;
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  color: #7c9cff;
+  margin-right: 10px;
 }
 
 h1 {
-  font-size: 1.4rem;
-  color: #222;
-  margin-bottom: 15px;
+  font-size: 1.8rem;
+  color: #9fb8ff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
+.subtitle {
+  color: #a5b4fc;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Input --- */
 input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #475569;
+  background-color: rgba(17, 24, 39, 0.8);
+  color: #fff;
+  font-size: 15px;
   outline: none;
-  font-size: 14px;
-  transition: border-color 0.2s;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus {
-  border-color: #0078ff;
+  border-color: #7c9cff;
+  box-shadow: 0 0 5px #7c9cff;
+}
+
+/* --- QR Code Output --- */
+#qrcode {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 140px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+#qrcode img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* --- Buttons --- */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 button {
-  margin-top: 15px;
-  padding: 12px 25px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
-  background-color: #0078ff;
-  color: white;
-  cursor: pointer;
+  border-radius: 10px;
   font-weight: 600;
-  font-size: 14px;
-  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
-button:hover {
-  background-color: #005fcc;
+#downloadBtn {
+  background-color: #6366f1;
+  color: #fff;
+}
+
+#downloadBtn:hover {
+  background-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+#generateBtn {
+  background-color: #374151;
+  color: #fff;
+}
+
+#generateBtn:hover {
+  background-color: #475569;
   transform: translateY(-2px);
 }
 
@@ -79,37 +131,42 @@ button:hover {
   display: none;
 }
 
-#qrcode {
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
+/* --- History Section --- */
+h2 {
+  font-size: 1.2rem;
+  color: #9fb8ff;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+  padding-bottom: 5px;
+  margin-bottom: 1rem;
 }
 
 #history {
-  margin-top: 25px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  border-top: 1px solid #eee;
-  padding-top: 15px;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-#history img {
-  width: 80px;
-  height: 80px;
-  border: 1px solid #ddd;
+.history-item {
+  background-color: rgba(55, 65, 81, 0.5);
+  border-left: 4px solid #6366f1;
+  padding: 10px;
   border-radius: 8px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
 }
 
-#history img:hover {
-  transform: scale(1.08);
+.history-item:hover {
+  background-color: rgba(99, 102, 241, 0.15);
+  transform: translateY(-2px);
 }
 
-h2 {
-  font-size: 1rem;
-  color: #333;
-  margin-top: 25px;
-  font-weight: 600;
+.history-item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.history-item span {
+  font-size: 12px;
+  color: #9ca3af;
 }
