@@ -20,7 +20,6 @@ generateBtn.addEventListener("click", () => {
     colorLight: "#ffffff",
   });
 
-
   setTimeout(() => {
     downloadBtn.classList.remove("hidden");
     saveToHistory();
