@@ -3,44 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live QR Code Generator</title>
+  <title>GoTeach Live QR Generator</title>
 
-  <!-- ✅ Favicon -->
-  <link rel="icon" type="image/png" href="images/logo.png" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- ✅ Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <!-- ✅ CSS -->
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- QRCode.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <!-- ✅ Logo -->
-    <img src="images/logo.png" alt="App Logo" class="logo" />
+  <div class="container glass-card">
+    <!-- Header -->
+    <div class="header">
+      <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+      <h1>GoTeach QR Generator</h1>
+    </div>
 
-    <h1>Live QR Code Generator</h1>
+    <p class="subtitle">Instantly generate QR codes for text, links, and data.</p>
 
-    <input 
-      type="text" 
-      id="dataInput" 
-      placeholder="Enter text, URL, or data..." 
-      aria-label="Enter text to generate QR code"
-    />
-    <button id="generateBtn">Generate QR Code</button>
+    <!-- Input -->
+    <input type="text" id="dataInput" placeholder="Enter text or URL here..." />
 
+    <!-- QR Output -->
     <div id="qrcode"></div>
 
-    <button id="downloadBtn" class="hidden">⬇️ Download QR</button>
+    <!-- Buttons -->
+    <div class="button-group">
+      <button id="downloadBtn" class="hidden">⬇️ Download QR</button>
+      <button id="generateBtn">Generate & Save</button>
+    </div>
 
-    <h2>Previous QR Codes</h2>
+    <!-- History -->
+    <h2>Recent Codes</h2>
     <div id="history"></div>
   </div>
 
-  <!-- ✅ QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
-  <!-- ✅ JavaScript -->
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
