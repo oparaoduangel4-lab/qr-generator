@@ -5,21 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Live QR Code Generator</title>
 
-  <!-- Favicon -->
-<link rel="icon" href="./images/LOGO.png" type="image/x-icon">
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png" />
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <!-- CSS -->
+  <!-- ✅ CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <img src="logo.png" alt="Logo" class="logo" />
+    <!-- ✅ Logo -->
+    <img src="images/logo.png" alt="App Logo" class="logo" />
+
     <h1>Live QR Code Generator</h1>
 
-    <input type="text" id="dataInput" placeholder="Enter text, URL, or data..." />
+    <input 
+      type="text" 
+      id="dataInput" 
+      placeholder="Enter text, URL, or data..." 
+      aria-label="Enter text to generate QR code"
+    />
     <button id="generateBtn">Generate QR Code</button>
 
     <div id="qrcode"></div>
@@ -30,11 +37,10 @@
     <div id="history"></div>
   </div>
 
-  <!-- QR Code Library -->
+  <!-- ✅ QR Code Library -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
-  <!-- JavaScript -->
+  <!-- ✅ JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
-
