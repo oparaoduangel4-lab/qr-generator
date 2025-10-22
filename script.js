@@ -1,71 +1,126 @@
-const input = document.getElementById("dataInput");
-const generateBtn = document.getElementById("generateBtn");
-const qrContainer = document.getElementById("qrcode");
-const downloadBtn = document.getElementById("downloadBtn");
-const historyContainer = document.getElementById("history");
+const dataInput = document.getElementById('dataInput');
+const qrcodeContainer = document.getElementById('qrcode');
+const downloadBtn = document.getElementById('downloadBtn');
+const generateBtn = document.getElementById('generateBtn');
+const historyContainer = document.getElementById('history');
 
-let qr;
+let qrCodeInstance = null;
+let currentData = '';
+const historyKey = 'qr_history';
 
-generateBtn.addEventListener("click", () => {
-  const data = input.value.trim();
-  if (!data) return alert("Please enter some text or data first!");
+// --- Draw QR Code ---
+const drawQRCode = (data) => {
+  if (!data) {
+    qrcodeContainer.innerHTML = `<p style="color:#888; font-size:14px;">Start typing to generate a code...</p>`;
+    downloadBtn.classList.add('hidden');
+    return;
+  }
 
-  qrContainer.innerHTML = ""; // clear old QR
+  qrcodeContainer.innerHTML = ''; // clear previous
 
-  qr = new QRCode(qrContainer, {
+  qrCodeInstance = new QRCode(qrcodeContainer, {
     text: data,
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
     colorDark: "#000000",
     colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
   });
 
-  setTimeout(() => {
-    downloadBtn.classList.remove("hidden");
-    saveToHistory();
-  }, 300);
-});
+  downloadBtn.classList.remove('hidden');
+  currentData = data;
+};
 
-downloadBtn.addEventListener("click", () => {
-  const img = qrContainer.querySelector("img") || qrContainer.querySelector("canvas");
-  if (!img) return;
+// --- History ---
+const getHistory = () => {
+  try {
+    const historyString = localStorage.getItem(historyKey);
+    return historyString ? JSON.parse(historyString) : [];
+  } catch {
+    return [];
+  }
+};
 
-  let qrURL;
-  if (img.tagName === "CANVAS") {
-    qrURL = img.toDataURL("image/png");
-  } else {
-    qrURL = img.src;
+const saveToHistory = (data) => {
+  if (!data) return;
+  let history = getHistory();
+  if (history.length > 0 && history[0].data === data) return;
+
+  const newItem = {
+    id: Date.now(),
+    data,
+    timestamp: new Date().toLocaleString()
+  };
+
+  history.unshift(newItem);
+  history = history.slice(0, 10);
+
+  localStorage.setItem(historyKey, JSON.stringify(history));
+  renderHistory();
+};
+
+const renderHistory = () => {
+  const history = getHistory();
+  historyContainer.innerHTML = '';
+
+  if (history.length === 0) {
+    historyContainer.innerHTML = '<p style="color:#888; font-size:13px; font-style:italic;">No recent codes yet.</p>';
+    return;
   }
 
-  const link = document.createElement("a");
-  link.href = qrURL;
-  link.download = "qr-code.png";
-  link.click();
-});
-
-function saveToHistory() {
-  const img = qrContainer.querySelector("img");
-  if (!img) return;
-
-  const qrData = img.src;
-  const stored = JSON.parse(localStorage.getItem("qrHistory")) || [];
-
-  if (!stored.includes(qrData)) {
-    stored.push(qrData);
-    localStorage.setItem("qrHistory", JSON.stringify(stored));
-    renderHistory();
-  }
-}
-
-function renderHistory() {
-  historyContainer.innerHTML = "";
-  const stored = JSON.parse(localStorage.getItem("qrHistory")) || [];
-
-  stored.forEach((src) => {
-    const img = document.createElement("img");
-    img.src = src;
-    historyContainer.appendChild(img);
+  history.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'history-item';
+    el.innerHTML = `
+      <p>${item.data.length > 50 ? item.data.substring(0, 47) + '...' : item.data}</p>
+      <span>${item.timestamp}</span>
+    `;
+    el.onclick = () => {
+      dataInput.value = item.data;
+      drawQRCode(item.data);
+    };
+    historyContainer.appendChild(el);
   });
-}
+};
 
-window.addEventListener("DOMContentLoaded", renderHistory);
+// --- Download ---
+const downloadQR = () => {
+  const canvas = qrcodeContainer.querySelector('canvas');
+  const img = qrcodeContainer.querySelector('img');
+
+  let url;
+  if (canvas) url = canvas.toDataURL("image/png");
+  else if (img) url = img.src;
+
+  if (!url) return;
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `qrcode_${Date.now()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+// --- Event Listeners ---
+dataInput.addEventListener('input', () => {
+  const data = dataInput.value.trim();
+  if (data !== currentData) drawQRCode(data);
+});
+
+generateBtn.addEventListener('click', () => {
+  const data = dataInput.value.trim();
+  if (data) {
+    drawQRCode(data);
+    saveToHistory(data);
+  }
+});
+
+downloadBtn.addEventListener('click', downloadQR);
+
+// --- Initialize ---
+window.onload = () => {
+  renderHistory();
+  dataInput.value = 'https://gouteach.com';
+  drawQRCode(dataInput.value);
+};
